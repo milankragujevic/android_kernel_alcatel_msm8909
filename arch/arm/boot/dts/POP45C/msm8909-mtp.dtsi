@@ -1,0 +1,730 @@
+/* Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "msm8909.dtsi"
+#include "msm8909-pinctrl.dtsi"
+#include "msm8909-camera-sensor-mtp.dtsi"
+
+&soc {
+	/*
+	 * DT node to add support for SMB135x charger and integrate
+	 * with VM-BMS.
+	 */
+//[Feature]-Add-BEGIN by TCTSZ. yongzhong.cheng@tcl.com,2015/6/25,for ALM386664:hall sensor ok
+        hall:qcom,hall {
+        cell-index = <0>;
+        compatible = "qcom,hall";
+        interrupt-parent = <&msm_gpio>;
+        interrupts = <58 0x2>;
+        interrupt-gpios = <&msm_gpio 58 0x00>;
+        vdd-supply = <&pm8909_l6>;
+        pinctrl-names = "default";
+                pinctrl-0 = <&hall_default>;
+        };
+//[Feature]-Add-END by TCTSZ. yongzhong.cheng@TCL.com, 2015/6/25,for ALM386664
+	 
+	i2c@78b8000 {
+		smb1357_otg_vreg: smb1357-charger@57 {
+			compatible = "qcom,smb1357-charger";
+			reg = <0x57>;
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <58 8>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&smb_int_default>;
+
+			qcom,bmd-algo-disabled;
+			qcom,float-voltage-mv = <4200>;
+			qcom,charging-timeout = <1536>;
+			qcom,recharge-thresh-mv = <100>;
+			regulator-name = "smb1357_otg_vreg";
+			qcom,soft-vfloat-comp-disabled;
+			qcom,thermal-mitigation = <1500 700 600 0>;
+
+			qcom,bms-psy-name = "bms";
+
+			/*
+			 * Disable SMB1357 based charging termination as BMS
+			 * controls charging.
+			 */
+			qcom,iterm-disabled;
+
+			/*
+			 * Disable charge inhibit feature to start chargin on
+			 * charger insertion independent of battery voltage.
+			 */
+			qcom,inhibit-disabled;
+
+			/* BMS is controlling charging/re-charge */
+			qcom,bms-controlled-charging;
+
+			/*
+			 * To enable charger node:
+			 * set status = "ok" and
+			 * add 'qcom,use-external-charger' to pm8909_chg node
+			 */
+			status = "disabled";
+		};
+	};
+
+	i2c@78b9000 { /* BLSP1 QUP5 */
+		//[Delete] Del Begin by hong.lan@tcl.com for synaptics touch panel driver not use 2016/06/24 PR:359508
+		/*
+		synaptics@20 {
+			compatible = "synaptics,dsx";
+			reg = <0x20>;
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <13 0x2008>;
+			avdd-supply = <&pm8909_l17>;
+			vdd-supply = <&pm8909_l6>;
+			// pins used by touchscreen 
+			pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
+			pinctrl-0 = <&ts_int_active &ts_reset_active>;
+			pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+			pinctrl-2 = <&ts_release>;
+			synaptics,irq-gpio = <&msm_gpio 13 0x2008>;
+			synaptics,reset-gpio = <&msm_gpio 12 0x0>;
+			synaptics,disable-gpios;
+			synaptics,display-coords = <0 0 719 1279>;
+			synaptics,panel-coords = <0 0 719 1405>;
+		};
+		*/
+		//[Delete] Del Begin by hong.lan@tcl.com for synaptics touch panel driver not use  2016/06/24 PR:359508*/
+		
+		/*[Feature] Add Begin by hong.lan@tcl.com for gt9157 driver  2015/06/17 TASK:359508*/
+		goodix_ts@5d {
+				compatible = "goodix,gt9xx";
+				reg = <0x5d>;
+				interrupt-parent = <&msm_gpio>;
+				interrupts = <13 0x2008>;
+				vdd_ana-supply = <&pm8909_l17>;
+				vcc_i2c-supply = <&pm8909_l6>;
+				pinctrl-names = "pmx_ts_int_active","pmx_ts_int_suspend"; 
+		        pinctrl-0 = <&ts_int_active>; 
+		        pinctrl-1 = <&ts_int_suspend>;
+
+				goodix,rst-gpio = <&msm_gpio 12 0x0>;
+				goodix,irq-gpio = <&msm_gpio 13 0x2008>;
+				goodix,cfg-group0 = [
+					41 D0 02 00 05 05 34 C0 01 08
+					1E 0F 46 32 03 05 00 00 00 00
+					00 00 04 17 19 1E 14 8A 2B 0C
+					52 54 79 04 FF FE 00 22 33 11
+					3A 89 00 00 32 46 00 00 00 00
+					00 3C 78 94 C5 02 07 00 14 04
+					B1 40 00 9A 4A 00 88 55 00 78
+					61 00 6A 70 00 6A 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 3C 28 00 00 00 00
+					00 00 02 04 06 08 0A 0C 0E 10
+					12 14 16 18 FF FF 00 00 00 00
+					00 00 00 00 00 00 10 00 00 03
+					79 04 26 24 22 21 20 1F 1E 1D
+					1C 18 16 12 10 0F 0C 0A 08 06
+					04 02 00 FF FF FF FF FF 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 1F 01];
+
+				goodix,cfg-group2 = [
+					41 D0 02 00 05 05 34 C0 01 08
+					1E 0F 46 32 03 05 00 00 00 00
+					00 00 04 17 19 1E 14 8A 2B 0C
+					52 54 79 04 FF FE 00 22 33 11
+					3A 89 00 00 32 46 00 00 00 00
+					00 3C 78 94 C5 02 07 00 14 04
+					B1 40 00 9A 4A 00 88 55 00 78
+					61 00 6A 70 00 6A 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 3C 28 00 00 00 00
+					00 00 02 04 06 08 0A 0C 0E 10
+					12 14 16 18 FF FF 00 00 00 00
+					00 00 00 00 00 00 10 00 00 03
+					79 04 26 24 22 21 20 1F 1E 1D
+					1C 18 16 12 10 0F 0C 0A 08 06
+					04 02 00 FF FF FF FF FF 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 00 00 00 00
+					00 00 00 00 00 00 1F 01];
+			};
+			/*[Feature] Add End by hong.lan@tcl.com for gt9157 driver 2015/06/17 TASK:359508 */
+			
+		/* [Feature] Add Begin by hong.lan@tcl.com for touchpanel driver pop45c 2015/09/01 TASK:538578 */
+		focaltech@38{
+			compatible = "focaltech,fts";
+			reg = <0x38>;
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <13 0x2002>;   
+			vdd-supply = <&pm8909_l17>;
+			vcc_i2c-supply = <&pm8909_l6>;
+			pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release"; 
+			pinctrl-0 = <&ts_int_active &ts_reset_active>;
+			pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+			pinctrl-2 = <&ts_release>;
+			focaltech,name = "fts";
+			focaltech,family-id = <0x54>;
+			focaltech,reset-gpio = <&msm_gpio 12 0x00>;
+			focaltech,irq-gpio = <&msm_gpio 13 0x2002>; 
+			focaltech,display-coords = <0 0 720 1280>;
+			focaltech,panel-coords = <0 0 720 1280>;
+			focaltech,button-map= <158 102 139>;
+			focaltech,no-force-update;
+			focaltech,i2c-pull-up;
+			focaltech,group-id = <1>;
+			focaltech,hard-reset-delay-ms = <20>;
+			focaltech,soft-reset-delay-ms = <150>;
+			focaltech,num-max-touches = <5>;
+			focaltech,fw-name = "Pixi3-4-4.5S_YJ80_V11_6336_20150128_app.i";
+			focaltech,fw-delay-aa-ms = <100>;
+			focaltech,fw-delay-55-ms = <30>;
+			focaltech,fw-upgrade-id1 = <0x79>;
+			focaltech,fw-upgrade-id2 = <0x08>;
+			focaltech,fw-delay-readid-ms = <10>;
+			focaltech,fw-delay-era-flsh-ms = <2000>;
+
+			focaltech,disp-maxx = <800>;
+			focaltech,disp-maxy = <1280>;
+			focaltech,pan-maxx = <720>;
+			focaltech,pan-maxy = <1280>;
+			focaltech,key-codes = <158 102 139>;
+
+		};
+		/* [Feature] Add End by hong.lan@tcl.com for touchpanel driver pop45c 2015/09/01 TASK:538578 */
+	};
+
+	gen-vkeys {
+		compatible = "qcom,gen-vkeys";
+		label = "synaptics_dsx";
+		qcom,disp-maxx = <719>;
+		qcom,disp-maxy = <1279>;
+		qcom,panel-maxx = <719>;
+		qcom,panel-maxy = <1405>;
+		qcom,key-codes = <158 139 172 217>;
+	};
+//[Feature]-Add-BEGIN by TCTSZ. add gpio and spmi interface for engineer mode driver porting junfeng.zhou.sz@tcl.com, 2015/6/30, for PR394132
+        emode_gpio {
+                compatible = "emode-gpio";
+        };
+//[Feature]-Add-END by TCTSZ. junfeng.zhou.sz@tcl.com, 2015/6/30, for PR394132
+	
+	/*[Feature] Add Begin by hong.lan@tcl.com for gt9157 driver  2016/06/17 PR:359508 */
+	gen-vkeys {
+		compatible = "qcom,gen-vkeys";
+		label = "Goodix-TS";
+		qcom,disp-maxx = <720>;
+		qcom,disp-maxy = <1280>;
+		qcom,panel-maxx = <720>;
+		qcom,panel-maxy = <1280>;
+		qcom,key-codes = <158 172 139>;
+	};
+	/*[Feature] Add End by hong.lan@tcl.com for gt9157 driver 2016/06/17 PR:359508 */
+	
+
+        /* comment out nfc dts by qian.zhao 2016/01/26
+	i2c@78b6000 { // BLSP1 QUP2 
+		nfc-nci@e {
+			compatible = "qcom,nfc-nci";
+			reg = <0x0e>;
+			qcom,irq-gpio = <&msm_gpio 21 0x00>;
+			qcom,dis-gpio = <&msm_gpio 20 0x00>;
+			qcom,clk-src = "BBCLK2";
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <21 0>;
+			interrupt-names = "nfc_irq";
+			pinctrl-names = "nfc_active","nfc_suspend";
+			pinctrl-0 = <&nfc_int_active &nfc_disable_active>;
+			pinctrl-1 = <&nfc_int_suspend &nfc_disable_suspend>;
+			qcom,clk-gpio = <&pm8909_gpios 2 0>;
+			clocks = <&clock_rpm clk_bb_clk2_pin>;
+			clock-names = "ref_clk";
+		};
+	};
+        */
+
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		input-name = "gpio-keys";
+		pinctrl-names = "tlmm_gpio_key_active","tlmm_gpio_key_suspend";
+		pinctrl-0 = <&gpio_key_active>;
+		pinctrl-1 = <&gpio_key_suspend>;
+
+		camera_focus {
+			label = "camera_focus";
+			gpios = <&msm_gpio 91 0x1>;
+			linux,input-type = <1>;
+			linux,code = <0x210>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+
+		camera_snapshot {
+			label = "camera_snapshot";
+			gpios = <&msm_gpio 92 0x1>;
+			linux,input-type = <1>;
+			linux,code = <0x2fe>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+
+		vol_up {
+			label = "volume_up";
+			gpios = <&msm_gpio 90 0x1>;
+			linux,input-type = <1>;
+			linux,code = <115>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+	};
+
+	audio_codec_mtp: sound {
+		compatible = "qcom,msm8x16-audio-codec";
+		qcom,model = "msm8909-snd-card";
+		qcom,msm-snd-card-id = <0>;
+		qcom,msm-codec-type = "internal";
+		qcom,msm-ext-pa = "primary";
+		qcom,msm-mclk-freq = <9600000>;
+		qcom,msm-mbhc-hphl-swh = <1>;	//[BUGFIX]-Modify by TCTSZ. configure headset jack for NO type yuchao.pan@tcl.com, 2015/06/29
+		qcom,msm-mbhc-gnd-swh = <0>;
+		qcom,msm-hs-micbias-type = "external";	//[BUGFIX]-Modify by TCTSZ. configure headset micbias to external yuchao.pan@tcl.com, 2015/06/29
+		qcom,msm-micbias1-ext-cap;
+		qcom,msm-micbias2-ext-cap;	//[BUGFIX]-Modify by TCTSZ. configure micbias2 for capacitance yuchao.pan@tcl.com, 2015/06/29
+		qcom,audio-routing =
+			"RX_BIAS", "MCLK",
+			"SPK_RX_BIAS", "MCLK",
+			"INT_LDO_H", "MCLK",
+			//[BUGFIX]-Modify-BEGIN by TCTSZ. configure mic micbias yuchao.pan@tcl.com, 2015/06/29
+			"MIC BIAS External", "Handset Mic",
+			"MIC BIAS External2", "Headset Mic",
+			"MIC BIAS External", "Secondary Mic",
+			"AMIC1", "MIC BIAS External",
+			"AMIC2", "MIC BIAS External2",
+			"AMIC3", "MIC BIAS External";
+			//[BUGFIX]-Modify-END by TCTSZ. configure mic micbias yuchao.pan@tcl.com, 2015/06/29
+		//[BUGFIX]-Modify-BEGIN by TCTSZ. configure headset & speaker function yuchao.pan@tcl.com, 2015/06/29
+		pinctrl-names = "cdc_lines_act",
+				"cdc_lines_sus",
+				"cross_conn_det_act",
+				"cross_conn_det_sus";
+				/*"vdd_spkdrv_act",
+				"vdd_spkdrv_sus";
+		pinctrl-0 = <&cdc_pdm_lines_act &vdd_spkdrv_act>;
+		pinctrl-1 = <&cdc_pdm_lines_sus &vdd_spkdrv_sus>;*/
+		//[BUGFIX]-Modify-END by TCTSZ. configure headset & speaker function yuchao.pan@tcl.com, 2015/06/29
+		pinctrl-0 = <&cdc_pdm_lines_act>;
+		pinctrl-1 = <&cdc_pdm_lines_sus>;
+		pinctrl-2 = <&cross_conn_det_act>;
+		pinctrl-3 = <&cross_conn_det_sus>;
+		qcom,cdc-us-euro-gpios = <&msm_gpio 97 0>;
+		asoc-platform = <&pcm0>, <&pcm1>, <&voip>, <&voice>,
+				<&loopback>, <&compress>, <&hostless>,
+				<&afe>, <&lsm>, <&routing>, <&lpa>,
+				<&voice_svc>;
+		asoc-platform-names = "msm-pcm-dsp.0", "msm-pcm-dsp.1",
+				"msm-voip-dsp", "msm-pcm-voice", "msm-pcm-loopback",
+				"msm-compress-dsp", "msm-pcm-hostless", "msm-pcm-afe",
+				"msm-lsm-client", "msm-pcm-routing", "msm-pcm-lpa",
+				"msm-voice-svc";
+		asoc-cpu = <&dai_pri_auxpcm>, <&dai_hdmi>,
+				<&dai_mi2s0>, <&dai_mi2s1>, <&dai_mi2s2>, <&dai_mi2s3>,
+				<&sb_0_rx>, <&sb_0_tx>, <&sb_1_rx>, <&sb_1_tx>,
+				<&sb_3_rx>, <&sb_3_tx>, <&sb_4_rx>, <&sb_4_tx>,
+				<&bt_sco_rx>, <&bt_sco_tx>,<&bt_a2dp_rx>,
+                                <&int_fm_rx>, <&int_fm_tx>,
+				<&afe_pcm_rx>, <&afe_pcm_tx>, <&afe_proxy_rx>, <&afe_proxy_tx>,
+				<&incall_record_rx>, <&incall_record_tx>, <&incall_music_rx>,
+				<&incall_music_2_rx>;
+		asoc-cpu-names = "msm-dai-q6-auxpcm.1", "msm-dai-q6-hdmi.8",
+				"msm-dai-q6-mi2s.0", "msm-dai-q6-mi2s.1",
+				"msm-dai-q6-mi2s.2", "msm-dai-q6-mi2s.3",
+				"msm-dai-q6-dev.16384", "msm-dai-q6-dev.16385",
+				"msm-dai-q6-dev.16386", "msm-dai-q6-dev.16387",
+				"msm-dai-q6-dev.16390", "msm-dai-q6-dev.16391",
+				"msm-dai-q6-dev.16392", "msm-dai-q6-dev.16393",
+				"msm-dai-q6-dev.12288", "msm-dai-q6-dev.12289",
+				"msm-dai-q6-dev.12290", "msm-dai-q6-dev.12292",
+                                "msm-dai-q6-dev.12293", "msm-dai-q6-dev.224",
+				"msm-dai-q6-dev.225", "msm-dai-q6-dev.241",
+				"msm-dai-q6-dev.240", "msm-dai-q6-dev.32771",
+				"msm-dai-q6-dev.32772", "msm-dai-q6-dev.32773",
+                                "msm-dai-q6-dev.32770";
+		asoc-codec = <&stub_codec>, <&pm8909_conga_dig>;
+		asoc-codec-names = "msm-stub-codec.1", "tombak_codec";
+	};
+};
+
+&blsp1_uart1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart_console_sleep>;
+};
+
+/ {
+	mtp_batterydata: qcom,battery-data {
+		qcom,rpull-up-kohm = <100>;
+		qcom,vref-batt-therm = <1800000>;
+		//[Feature]-Add-BEGIN by TCTSZ. enable pm8909 charging for charging porting junfeng.zhou.sz@tcl.com, 2015/6/19, for PR369037
+		#include "TCL_DTSI_File_CUTOFF_3v4_TLp025C1.dtsi"
+		#include "TLp025C2_3v4_TCL_QBCSW.dtsi"
+		//#include "batterydata-palladium.dtsi"
+		//[Feature]-Add-END by TCTSZ. junfeng.zhou.sz@tcl.com, 2015/6/19, for PR369037
+	};
+};
+
+&qcom_rng {
+	status = "okay";
+};
+
+&qcom_crypto {
+	status = "okay";
+};
+
+&qcom_cedev {
+	status = "okay";
+};
+
+&qcom_seecom {
+	status = "okay";
+};
+
+&qcom_tzlog {
+	status = "okay";
+};
+
+&sdhc_1 {
+	vdd-supply = <&pm8909_l8>;
+	qcom,vdd-voltage-level = <2900000 2900000>;
+	qcom,vdd-current-level = <200 400000>;
+
+	vdd-io-supply = <&pm8909_l5>;
+	qcom,vdd-io-always-on;
+	qcom,vdd-io-lpm-sup;
+	qcom,vdd-io-voltage-level = <1800000 1800000>;
+	qcom,vdd-io-current-level = <200 60000>;
+
+	pinctrl-names = "active", "sleep";
+	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
+	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
+
+	qcom,bus-speed-mode = "HS200_1p8v", "DDR_1p8v";
+	qcom,nonremovable;
+
+	status = "ok";
+};
+
+&sdhc_2 {
+	 #address-cells = <0>;
+	interrupt-parent = <&sdhc_2>;
+	interrupts = <0 1 2>;
+	#interrupt-cells = <1>;
+	interrupt-map-mask = <0xffffffff>;
+	interrupt-map = <0 &intc 0 125 0
+			1 &intc 0 221 0
+			2 &msm_gpio 38 0>;
+	interrupt-names = "hc_irq", "pwr_irq", "status_irq";
+	//[FEATURE]-Add-BEGIN by TCTSZ. modify sd card detect method wenzhao.guo@tcl.com, 2015/09/14, for [Task-575398]
+	//cd-gpios = <&msm_gpio 38 0x1>;
+	cd-gpios = <&msm_gpio 38 0x0>;
+	//[FEATURE]-Add-END by TCTSZ. modify sd card detect method  wenzhao.guo@tcl.com, 2015/09/14, for [Task-575398]
+
+	vdd-supply = <&pm8909_l11>;
+	qcom,vdd-voltage-level = <1800000 2950000>;
+	qcom,vdd-current-level = <15000 400000>;
+
+	vdd-io-supply = <&pm8909_l12>;
+	qcom,vdd-io-voltage-level = <1800000 2950000>;
+	qcom,vdd-io-current-level = <200 50000>;
+
+	pinctrl-names = "active", "sleep";
+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+
+	status = "ok";
+};
+
+&tlmm_pinmux {
+	mpu6050_int_pin {
+		qcom,pins = <&gp 96>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "mpu6050-irq";
+		mpu6050_default: mpu6050_default {
+			drive-strength = <6>;
+			bias-pull-down;
+		};
+		mpu6050_sleep: mpu6050_sleep {
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+
+// [Feature]Add-BEGIN by TCTSZ. ning.wei@tcl.com, 2015/08/03, for del unused p/l sensor ALM389755
+/*	apds99xx_int_pin {
+		qcom,pins = <&gp 94>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "apds99xx-irq";
+		apds99xx_default: apds99xx_default {
+			drive-strength = <6>;
+			bias-pull-up;
+		};
+		apds99xx_sleep: apds99xx_sleep {
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};*/
+// [Feature]-Add-END by TCTSZ. ning.wei@tcl.com, 2015/08/03, for del unused sensor ALM389755
+
+	ak8963_int_pin {
+		qcom,pins = <&gp 65>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "ak8963-irq";
+		ak8963_default: ak8963_default {
+			drive-strength = <6>;
+			bias-pull-up;
+		};
+		ak8963_sleep: ak8963_sleep {
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+
+// [Feature]Add-BEGIN by TCTSZ. ning.wei@tcl.com, 2015/08/03, for add stk p/l sensor pull up&down ALM389755
+	stk3x1x_int_pin {
+			qcom,pins = <&gp 94>;
+			qcom,pin-func = <0>;
+			qcom,num-grp-pins = <1>;
+			label = "stk3x1x-irq";
+			stk3x1x_default: stk3x1x_default {
+				drive-strength = <6>;
+				bias-pull-up;
+			};
+			stk3x1x_sleep: stk3x1x_sleep {
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+// [Feature]-Add-END by TCTSZ. ning.wei@tcl.com, 2015/08/03, for add stk p/l sensor pull up&down ALM389755
+};
+
+&i2c_1 { /* BLSP1 QUP1 */
+	// [Feature]-Add-BEGIN by TCTSZ. add for G-sensor and e-compass driver shengwang.luo@tcl.com, 2015/06/24, for task387542
+	bosch@18 { /* Accelerometer sensor */
+		compatible = "bosch,bma2x2";
+		reg = <0x18>;
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <96 0x2002>;
+		vdd-supply = <&pm8909_l17>;
+		vio-supply = <&pm8909_l6>;
+		bosch,init-interval = <200>;
+		bosch,place = <2>;
+		bosch,gpio-int1 = <&msm_gpio 96 0x2002>;
+		bosch,use-hrtimer;
+	};
+	
+//[Feature]-BEGIN by TCTSZ.yongzhong.cheng@tcl.com,2015/9/16,for 538697:bmg160 getdata ok
+	bosch@68{
+        	compatible = "bosch,bmg160";
+        	reg = <0x68>;//SDO=GND
+        	interrupt-parent = <&msm_gpio>;
+        	interrupts = <98 0x2002>;
+        	vdd-supply = <&pm8909_l17>;
+		vio-supply = <&pm8909_l6>;
+	};
+//[Feature]-END by TCTSZ.yongzhong.cheng@tcl.com, 2015/9/16,for 538697
+
+	akm@c { // Magnetic field sensor
+		compatible = "akm,akm09911";
+		reg = <0x0c>;
+		vdd-supply = <&pm8909_l17>;
+		vio-supply = <&pm8909_l6>;
+		akm,layout = <0x5>;
+		akm,auto-report;
+	};
+	// [Feature]-Add-END by TCTSZ. shengwang.luo@tcl.com, 2015/06/24, for task387542
+
+	// [Feature]Add-BEGIN by TCTSZ. ning.wei@tcl.com, 2015/06/25, for stk p/l sensor ALM389755
+	stk3x1x@48 {
+			compatible = "stk,stk3x1x";
+			reg = <0x48>;
+			pinctrl-names = "default","sleep";
+			pinctrl-0 = <&stk3x1x_default>;
+			pinctrl-1 = <&stk3x1x_sleep>;
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <94 0x2002>;
+			vdd-supply = <&pm8909_l17>;
+			vio-supply = <&pm8909_l6>;
+			stk,irq-gpio = <&msm_gpio 94 0x2002>;
+			stk,transmittance = <1250>;
+			stk,state-reg = <0x00>;
+			stk,psctrl-reg = <0x31>;
+			stk,alsctrl-reg = <0x3A>;
+			stk,ledctrl-reg = <0xFF>;
+			stk,wait-reg = <0x07>;
+			stk,ps-thdh = <1000>;
+			stk,ps-thdl = <900>;
+			stk,mmi-thdh-limit = <900>;
+			stk,mmi-thdl-limit = <80>;
+			stk,use-fir;
+		};
+	// [Feature]-Add-END by TCTSZ. ning.wei@tcl.com, 2015/06/25, for stk p/l sensor ALM389755
+
+	mpu6050@68 { /* Gyroscope and accelerometer sensor combo */
+		compatible = "invn,mpu6050";
+		reg = <0x68>;
+		pinctrl-names = "mpu_default","mpu_sleep";
+		pinctrl-0 = <&mpu6050_default>;
+		pinctrl-1 = <&mpu6050_sleep>;
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <96 0x1>;
+		vdd-supply = <&pm8909_l17>;
+		vlogic-supply = <&pm8909_l6>;
+		invn,gpio-int = <&msm_gpio 96 0x1>;
+		invn,place = "Portrait Down Back Side";
+	};
+
+// [Feature]Add-BEGIN by TCTSZ. ning.wei@tcl.com, 2015/08/03, for del unused p/l sensor ALM389755
+/*	avago@39 { // Ambient light and proximity sensor
+		compatible = "avago,apds9900";
+		reg = <0x39>;
+		pinctrl-names = "default","sleep";
+		pinctrl-0 = <&apds99xx_default>;
+		pinctrl-1 = <&apds99xx_sleep>;
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <94 0x2002>;
+		vdd-supply = <&pm8909_l17>;
+		vio-supply = <&pm8909_l6>;
+		avago,irq-gpio = <&msm_gpio 94 0x2002>;
+		avago,ps-threshold = <600>;
+		avago,ps-hysteresis-threshold = <500>;
+		avago,ps-pulse = <8>;
+		avago,ps-pgain = <0>;
+		avago,als-B = <186>;
+		avago,als-C = <75>;
+		avago,als-D = <129>;
+		avago,ga-value = <256>;
+	};
+*/
+// [Feature]-Add-END by TCTSZ. ning.wei@tcl.com, 2015/08/03, for del unused sensor ALM389755
+
+	memsic@30 { /* Magnetic field sensor */
+		compatible = "memsic,mmc3416x";
+		reg = <0x30>;
+		vdd-supply = <&pm8909_l17>;
+		vio-supply = <&pm8909_l6>;
+		memsic,dir = "obverse-x-axis-forward";
+		memsic,auto-report;
+	};
+};
+
+
+&pm8909_mpps {
+	mpp@a000 { /* MPP 1 */
+		/* VDD_PX */
+		status = "disabled";
+	};
+
+	mpp@a100 { /* MPP 2 */
+		/* Backlight PWM */
+		qcom,mode = <1>;		/* Digital output */
+		qcom,invert = <0>;		/* Disable invert */
+		qcom,src-sel = <4>;		/* DTEST1 */
+		qcom,vin-sel = <0>;		/* VPH_PWR */
+		qcom,master-en = <1>;		/* Enable MPP */
+	};
+
+	mpp@a200 { /* MPP 3 */
+		/* VREF DAC */
+		status = "disabled";
+	};
+
+	mpp@a300 { /* MPP 4 */
+		/* HR LED */
+		qcom,mode = <1>;		/* Digital output */
+		qcom,invert = <0>;		/* Disable invert */
+		qcom,src-sel = <4>;		/* DTEST1 */
+		qcom,vin-sel = <0>;		/* VPH_PWR */
+		qcom,master-en = <1>;		/* Enable MPP */
+	};
+};
+#include "dsi-panel-hx8394d-txd-hd-video.dtsi"
+//[Feature]-Modify-BEGIN by TCTSZ. lcd 9881c bring up . yusen.ke.sz@tcl.com, 2015/7/7, for PR364368 
+#include "dsi-panel-ili9881c-tdt-hd-video.dtsi"
+//[Feature]-MODIFY-END by TCTSZ. yusen.ke.sz@tcl.com, 2015/7/7, for PR364368
+#include "dsi-panel-otm1287a-bdy-720p-video.dtsi"
+//[Feature]-Add-END by TCTSZ. yusen.ke.sz@tcl.com, 2015/6/19, for PR364368
+
+&mdss_mdp {
+	qcom,mdss-pref-prim-intf = "dsi";
+};
+
+
+//[Feature]-ADD-BEGIN by TCTSZ. lcd 9881c bring up . yusen.ke.sz@tcl.com, 2015/7/7, for PR364368 
+&dsi_ili9881c_tdt_hd_vid {
+	qcom,cont-splash-enabled;
+};
+
+&pmx_mdss {
+	qcom,num-grp-pins = <2>;
+	qcom,pins = <&gp 25>, <&gp 17>;
+};
+
+&pmx_mdss_te {
+	qcom,num-grp-pins = <1>;
+	qcom,pins = <&gp 24>;
+};
+
+&mdss_dsi0 {
+		qcom,dsi-pref-prim-pan = <&dsi_ili9881c_tdt_hd_vid>;
+		pinctrl-names = "mdss_default", "mdss_sleep";
+		pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
+		pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
+
+		qcom,platform-reset-gpio = <&msm_gpio 25 0>;
+		//qcom,platform-bklight-en-gpio = <&msm_gpio 17 0>;
+		qcom,platform-blk-ctrl-gpio = <&msm_gpio 17 0>;
+		qcom,platform-te-gpio = <&msm_gpio 24 0>; 
+
+};
+//[Feature]-Add-END by TCTSZ. yusen.ke.sz@tcl.com, 2015/6/19, for PR364368
+
+/* CoreSight */
+&tpiu {
+	pinctrl-names = "sdcard", "trace", "swduart",
+			"swdtrc", "jtag", "spmi";
+	/* NIDnT */
+	pinctrl-0 = <&qdsd_clk_sdcard &qdsd_cmd_sdcard
+		     &qdsd_data0_sdcard &qdsd_data1_sdcard
+		     &qdsd_data2_sdcard &qdsd_data3_sdcard>;
+	pinctrl-1 = <&qdsd_clk_trace &qdsd_cmd_trace
+		     &qdsd_data0_trace &qdsd_data1_trace
+		     &qdsd_data2_trace &qdsd_data3_trace>;
+	pinctrl-2 = <&qdsd_cmd_swduart &qdsd_data0_swduart
+		     &qdsd_data1_swduart &qdsd_data2_swduart
+		     &qdsd_data3_swduart>;
+	pinctrl-3 = <&qdsd_clk_swdtrc &qdsd_cmd_swdtrc
+		     &qdsd_data0_swdtrc &qdsd_data1_swdtrc
+		     &qdsd_data2_swdtrc &qdsd_data3_swdtrc>;
+	pinctrl-4 = <&qdsd_cmd_jtag &qdsd_data0_jtag
+		     &qdsd_data1_jtag &qdsd_data2_jtag
+		     &qdsd_data3_jtag>;
+	pinctrl-5 = <&qdsd_clk_spmi &qdsd_cmd_spmi
+		     &qdsd_data0_spmi &qdsd_data3_spmi>;
+};

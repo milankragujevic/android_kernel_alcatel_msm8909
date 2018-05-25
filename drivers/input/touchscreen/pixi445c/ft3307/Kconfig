@@ -1,0 +1,23 @@
+#
+# FocalTech FTS Touchscreen driver
+#
+
+config TOUCHSCREEN_FT3307_POP445C          
+        tristate "focaltech touchscreen"
+	default n
+        depends on I2C
+        help
+         Say Y here if you have a focaltech touchscreen.
+         If unsure, say N.
+         To compile this driver as a module, choose M here: the
+         module will be called focaltech.
+
+config TOUCHPANEL_PROXIMITY_SENSOR
+        tristate "focaltech touchscreen"
+	default n
+        depends on I2C
+        help
+         Say Y here if you have want to open the function.
+         If unsure, say N.
+         To compile this driver as a module, choose M here: the
+         module will be called focaltech.

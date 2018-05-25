@@ -1,0 +1,8 @@
+config TOUCHSCREEN_MSG2238_POP445C          
+       tristate "MSG2238 touchscreen"
+       depends on I2C
+       help
+         Say Y here if you have a MSG2238 touchscreen on TCL PIXI3.
+         If unsure, say N.
+         To compile this driver as a module, choose M here: the
+         module will be called MSG2238.

@@ -1,0 +1,6 @@
+config PIXI445SPR_STK3X1X
+	tristate "STK3X1X TCT device driver"
+	depends on I2C
+	help
+	  Say Y here you want to enable for the sitronix stk3x1x tct
+	  light and proximity sensors driver.

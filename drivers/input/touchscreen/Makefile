@@ -1,0 +1,130 @@
+#
+# Makefile for the touchscreen drivers.
+#
+
+# Each configuration option enables a list of files.
+
+wm97xx-ts-y := wm97xx-core.o
+
+obj-$(CONFIG_TOUCHSCREEN_88PM860X)	+= 88pm860x-ts.o
+obj-$(CONFIG_TOUCHSCREEN_AD7877)	+= ad7877.o
+obj-$(CONFIG_TOUCHSCREEN_AD7879)	+= ad7879.o
+obj-$(CONFIG_TOUCHSCREEN_AD7879_I2C)	+= ad7879-i2c.o
+obj-$(CONFIG_TOUCHSCREEN_AD7879_SPI)	+= ad7879-spi.o
+obj-$(CONFIG_TOUCHSCREEN_ADS7846)	+= ads7846.o
+obj-$(CONFIG_TOUCHSCREEN_ATMEL_MXT)	+= atmel_mxt_ts.o
+obj-$(CONFIG_TOUCHSCREEN_ATMEL_MAXTOUCH_TS)	+= atmel_maxtouch_ts.o
+obj-$(CONFIG_TOUCHSCREEN_ATMEL_TSADCC)	+= atmel_tsadcc.o
+obj-$(CONFIG_TOUCHSCREEN_AUO_PIXCIR)	+= auo-pixcir-ts.o
+obj-$(CONFIG_TOUCHSCREEN_BU21013)	+= bu21013_ts.o
+obj-$(CONFIG_TOUCHSCREEN_CY8CTMG110)	+= cy8ctmg110_ts.o
+obj-$(CONFIG_TOUCHSCREEN_CYTTSP_CORE)	+= cyttsp_core.o
+obj-$(CONFIG_TOUCHSCREEN_CYTTSP_I2C)	+= cyttsp_i2c.o
+obj-$(CONFIG_TOUCHSCREEN_CYTTSP_SPI)	+= cyttsp_spi.o
+obj-$(CONFIG_TOUCHSCREEN_DA9034)	+= da9034-ts.o
+obj-$(CONFIG_TOUCHSCREEN_DA9052)	+= da9052_tsi.o
+obj-$(CONFIG_TOUCHSCREEN_DYNAPRO)	+= dynapro.o
+obj-$(CONFIG_TOUCHSCREEN_EDT_FT5X06)	+= edt-ft5x06.o
+obj-$(CONFIG_TOUCHSCREEN_HAMPSHIRE)	+= hampshire.o
+obj-$(CONFIG_TOUCHSCREEN_GUNZE)		+= gunze.o
+obj-$(CONFIG_TOUCHSCREEN_EETI)		+= eeti_ts.o
+obj-$(CONFIG_TOUCHSCREEN_ELO)		+= elo.o
+obj-$(CONFIG_TOUCHSCREEN_EGALAX)	+= egalax_ts.o
+obj-$(CONFIG_TOUCHSCREEN_FUJITSU)	+= fujitsu_ts.o
+obj-$(CONFIG_TOUCHSCREEN_GEN_VKEYS)	+= gen_vkeys.o
+obj-$(CONFIG_TOUCHSCREEN_ILI210X)	+= ili210x.o
+obj-$(CONFIG_TOUCHSCREEN_INEXIO)	+= inexio.o
+obj-$(CONFIG_TOUCHSCREEN_INTEL_MID)	+= intel-mid-touch.o
+obj-$(CONFIG_TOUCHSCREEN_LPC32XX)	+= lpc32xx_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MAX11801)	+= max11801_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MC13783)	+= mc13783_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MCS5000)	+= mcs5000_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MIGOR)		+= migor_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MMS114)	+= mms114.o
+obj-$(CONFIG_TOUCHSCREEN_MTOUCH)	+= mtouch.o
+obj-$(CONFIG_TOUCHSCREEN_MK712)		+= mk712.o
+obj-$(CONFIG_TOUCHSCREEN_HP600)		+= hp680_ts_input.o
+obj-$(CONFIG_TOUCHSCREEN_HP7XX)		+= jornada720_ts.o
+obj-$(CONFIG_TOUCHSCREEN_HTCPEN)	+= htcpen.o
+obj-$(CONFIG_TOUCHSCREEN_USB_COMPOSITE)	+= usbtouchscreen.o
+obj-$(CONFIG_TOUCHSCREEN_PCAP)		+= pcap_ts.o
+obj-$(CONFIG_TOUCHSCREEN_PENMOUNT)	+= penmount.o
+obj-$(CONFIG_TOUCHSCREEN_PIXCIR)	+= pixcir_i2c_ts.o
+obj-$(CONFIG_TOUCHSCREEN_S3C2410)	+= s3c2410_ts.o
+obj-$(CONFIG_TOUCHSCREEN_ST1232)	+= st1232.o
+obj-$(CONFIG_TOUCHSCREEN_STMPE)		+= stmpe-ts.o
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_v21) += synaptics_dsx/
+obj-$(CONFIG_TOUCHSCREEN_TI_AM335X_TSC)	+= ti_am335x_tsc.o
+obj-$(CONFIG_TOUCHSCREEN_TNETV107X)	+= tnetv107x-ts.o
+obj-$(CONFIG_TOUCHSCREEN_TOUCHIT213)	+= touchit213.o
+obj-$(CONFIG_TOUCHSCREEN_TOUCHRIGHT)	+= touchright.o
+obj-$(CONFIG_TOUCHSCREEN_TOUCHWIN)	+= touchwin.o
+obj-$(CONFIG_TOUCHSCREEN_TSC_SERIO)	+= tsc40.o
+obj-$(CONFIG_TOUCHSCREEN_TSC2005)	+= tsc2005.o
+obj-$(CONFIG_TOUCHSCREEN_TSC2007)	+= tsc2007.o
+obj-$(CONFIG_TOUCHSCREEN_UCB1400)	+= ucb1400_ts.o
+obj-$(CONFIG_TOUCHSCREEN_WACOM_W8001)	+= wacom_w8001.o
+obj-$(CONFIG_TOUCHSCREEN_WACOM_I2C)	+= wacom_i2c.o
+obj-$(CONFIG_TOUCHSCREEN_WM831X)	+= wm831x-ts.o
+obj-$(CONFIG_TOUCHSCREEN_WM97XX)	+= wm97xx-ts.o
+wm97xx-ts-$(CONFIG_TOUCHSCREEN_WM9705)	+= wm9705.o
+wm97xx-ts-$(CONFIG_TOUCHSCREEN_WM9712)	+= wm9712.o
+wm97xx-ts-$(CONFIG_TOUCHSCREEN_WM9713)	+= wm9713.o
+obj-$(CONFIG_TOUCHSCREEN_WM97XX_ATMEL)	+= atmel-wm97xx.o
+obj-$(CONFIG_TOUCHSCREEN_WM97XX_MAINSTONE)	+= mainstone-wm97xx.o
+obj-$(CONFIG_TOUCHSCREEN_WM97XX_ZYLONITE)	+= zylonite-wm97xx.o
+obj-$(CONFIG_TOUCHSCREEN_W90X900)	+= w90p910_ts.o
+obj-$(CONFIG_TOUCHSCREEN_TPS6507X)	+= tps6507x-ts.o
+obj-$(CONFIG_TOUCHSCREEN_FT5X06)	+= ft5x06_ts.o
+obj-$(CONFIG_TOUCHSCREEN_MSTAR21XX)	+= msg21xx_ts.o
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_RMI4_DEV)	+= synaptics_rmi_dev.o
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_FW_UPDATE) 	+= synaptics_fw_update.o
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)		+= synaptics_i2c_rmi4.o
+obj-$(CONFIG_TOUCHSCREEN_GT9XX)		+= gt9xx/
+obj-$(CONFIG_TOUCHSCREEN_BU21150)	+= bu21150.o
+obj-$(CONFIG_INPUT_MT_WRAPPER)		+= input_mt_wrapper.o
+obj-$(CONFIG_TOUCHSCREEN_IT7260_I2C)    += it7258_ts_i2c.o
+
+#[Feature] Add Begin by hong.lan@tcl.com for touchpanel driver Pop4-5C 2016/09/01 TASK:538578
+obj-$(CONFIG_TOUCHSCREEN_GT615)       += pop45c/gt615/
+obj-$(CONFIG_TOUCHSCREEN_FTS)		+= pop45c/focaltech/
+#[Feature] Add End by hong.lan@tcl.com for touchpanel driver  Pop4-5C 2016/09/01 TASK:538578
+
+#[Feature] Add Begin by hong.lan@tcl.com for touchpanel driver Pop4-5.5C 2016/09/21 TASK:538578
+obj-$(CONFIG_TOUCHSCREEN_FTS_FT5346I)		+= pop455c/ft5346i/
+obj-$(CONFIG_TOUCHSCREEN_GT5668)		+= pop455c/gt5668/
+#[Feature] Add End by hong.lan@tcl.com for touchpanel driver  Pop4-5.5C 2016/09/21 TASK:538578
+
+#[Feature] Add Begin by hong.lan@tcl.com for pop45 himax825 2015/11/20 
+obj-$(CONFIG_TOUCHSCREEN_HIMAX_HX852xES)      += pop45/hx852xes/
+#[Feature] Add End by hong.lan@tcl.com for pop45 himax825 2015/11/20 
+
+#[Feature] Add Begin by weigeng.huang@tcl.com for Pixi4554G himax825 2016/3/4 
+obj-$(CONFIG_TOUCHSCREEN_PIXI4554G_HIMAX)      += Pixi4554G/hx852xes/
+#[Feature] Add End by weigeng.huang@tcl.com for Pixi4554G himax825 2016/3/4 
+
+#[Feature] Add Begin by hong.lan@tcl.com for touchpanel driver Pixi3454GSPR 2015/10/29 TASK:844578
+obj-$(CONFIG_FT6336_TOUCHPANEL_DRIVER)		+= Pixi3454GSPR/ft6336/
+#[Feature] Add End by hong.lan@tcl.com for touchpanel driver Pixi3454GSPR 2015/10/29 TASK:844578
+
+#[Feature] Add Begin by hong.lan@tcl.com touch panel driver 2015/12/03
+obj-$(CONFIG_TOUCHSCREEN_GT615_POP45)       += pop45/gt615/
+obj-$(CONFIG_TOUCHSCREEN_FTS_FT3427)		+= pop45/ft3427/
+#[Feature] Add End by hong.lan@tcl.com touch panel driver 2015/12/03
+
+#[Feature] Add Begin by hong.lan@tcl.com for touchpanel driver Pixi445SPR 2015/12/11 PR:359508
+obj-$(CONFIG_FT3307_TOUCHPANEL_DRIVER)		+= Pixi445SPR/ft3307/
+#[Feature] Add End by hong.lan@tcl.com for touchpanel driver Pixi445SPR 2015/12/11 PR:359508
+
+#[Feature] Add Begin by falin.luo@tcl.com for touchpanel driver Pixi4-6-4G 2015/12/18
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_S2333)		+= Pixi464G/s2333/
+obj-$(CONFIG_TOUCHSCREEN_MELFAS_MMS438)		        += Pixi464G/melfas_mip4_mms438/
+#[Feature] Add End by falin.luo@tcl.com for touchpanel driver Pixi4-6-4G 2015/12/18
+
+##[Feature] Add Begin by weigeng.huang@tcl.com for touchpanel driver GoPlay2 2016/01/07
+obj-$(CONFIG_TOUCHSCREEN_GT615_GOPLAY2)		+= Goplay2/gt615/
+#[Feature] Add End by weigeng.huang@tcl.com for touchpanel driver GoPlay2 2016/01/07
+#Add Pixi445Cricket's TP by TCT-CD ke.li@tcl.com  2016.2.17
+obj-$(CONFIG_TOUCHSCREEN_MSG2238_POP445C)	+= pixi445c/msg2238/
+obj-$(CONFIG_TOUCHSCREEN_FT3307_POP445C)	+= pixi445c/ft3307/
+#Add Pixi445Cricket's TP by TCT-CD ke.li@tcl.com  2016.2.17

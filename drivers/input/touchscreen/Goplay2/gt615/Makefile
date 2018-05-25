@@ -1,0 +1,6 @@
+obj-$(CONFIG_TOUCHSCREEN_GT615_GOPLAY2) += goodix_tool.o
+obj-$(CONFIG_TOUCHSCREEN_GT615_GOPLAY2) += gt9xx.o
+obj-$(CONFIG_TOUCHSCREEN_GT615_GOPLAY2) += gt9xx_update.o
+obj-$(CONFIG_TOUCHSCREEN_GT615_GOPLAY2) += gt9xx_openshort.o
+
+

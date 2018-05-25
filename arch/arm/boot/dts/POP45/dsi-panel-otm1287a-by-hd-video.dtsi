@@ -1,0 +1,307 @@
+/* Copyright (c) 2014, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+//modify by yusen.ke.sz@tcl.com at 20160105 for RF REQ
+&mdss_mdp {
+	dsi_otm1287a_by_hd_vid: qcom,mdss_dsi_otm1287a_by_hd_video {
+		qcom,mdss-dsi-panel-name = "otm1287a by hd video mode dsi panel[20160329_v2]";
+		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
+		qcom,mdss-dsi-panel-type = "dsi_video_mode";
+		qcom,mdss-dsi-panel-destination = "display_1";
+		qcom,mdss-dsi-panel-framerate = <60>;
+		qcom,mdss-dsi-virtual-channel-id = <0>;
+		qcom,mdss-dsi-stream = <0>;
+		qcom,mdss-dsi-panel-width = <720>;
+		qcom,mdss-dsi-panel-height = <1280>;
+		
+		qcom,mdss-dsi-h-front-porch = <108>;
+		qcom,mdss-dsi-h-back-porch = <180>;
+		qcom,mdss-dsi-h-pulse-width = <8>;
+		
+		qcom,mdss-dsi-h-sync-skew = <0>;
+        qcom,mdss-dsi-v-front-porch = <25>;
+		qcom,mdss-dsi-v-back-porch = <25>;
+		qcom,mdss-dsi-v-pulse-width = <4>;
+		qcom,mdss-dsi-h-left-border = <0>;
+		qcom,mdss-dsi-h-right-border = <0>;
+		qcom,mdss-dsi-v-top-border = <0>;
+		qcom,mdss-dsi-v-bottom-border = <0>;
+		qcom,mdss-dsi-bpp = <24>;
+		//qcom,mdss-dsi-color-order = "rgb_swap_rgb";
+		qcom,mdss-dsi-underflow-color = <0xff>;
+		qcom,mdss-dsi-border-color = <0>;
+		qcom,mdss-dsi-on-command = [
+
+29 01 00 00 00 00 02			00 00
+29 01 00 00 00 00 04			ff 12 87 01
+29 01 00 00 00 00 02			00 80
+29 01 00 00 00 00 03			ff 12 87
+29 01 00 00 00 00 02			00 92
+29 01 00 00 00 00 03			ff 30 02
+29 01 00 00 00 00 02			00 91
+29 01 00 00 00 00 02			b0 92
+29 01 00 00 00 00 02			00 80
+29 01 00 00 00 00 0a			c0 00 64 00			0f 11 00 64			0f 11
+29 01 00 00 00 00 02			00 90
+29 01 00 00 00 00 07			c0 00 5c 00			01 00 04
+29 01 00 00 00 00 02			00 a4
+29 01 00 00 00 00 02			c0 00
+29 01 00 00 00 00 02			00 b3
+29 01 00 00 00 00 03			c0 00 55
+29 01 00 00 00 00 02			00 81
+29 01 00 00 00 00 02			c1 55
+29 01 00 00 00 00 02			00 90
+29 01 00 00 00 00 05			f5 02 11 02 15
+29 01 00 00 00 00 02			00 90
+29 01 00 00 00 00 02			c5 50
+29 01 00 00 00 00 02			00 94
+29 01 00 00 00 00 02			c5 66
+29 01 00 00 00 00 02			00 b2
+29 01 00 00 00 00 03			f5 00 00
+29 01 00 00 00 00 02			00 b6
+29 01 00 00 00 00 03			f5 00 00
+29 01 00 00 00 00 02			00 94
+29 01 00 00 00 00 03			f5 00 00
+29 01 00 00 00 00 02			00 d2
+29 01 00 00 00 00 03			f5 06 15
+29 01 00 00 00 00 02			00 b4
+29 01 00 00 00 00 02			c5 cc
+29 01 00 00 00 00 02			00 a0
+29 01 00 00 00 00 0f			c4 05 10 06	02 05 15 10	05 10 07 02	05 15 10
+29 01 00 00 00 00 02			00 b0
+29 01 00 00 00 00 03			c4 00 00
+29 01 00 00 00 00 02			00 91
+29 01 00 00 00 00 03			c5 19 52
+29 01 00 00 00 00 02			00 00
+29 01 00 00 00 00 03			d8 bc bc
+29 01 00 00 00 00 02			00 00
+29 01 00 00 00 00 02			d9 74
+29 01 00 00 00 00 02			00 b3
+29 01 00 00 00 00 02			c5 84
+29 01 00 00 00 00 02			00 bb
+29 01 00 00 00 00 02			c5 8a
+29 01 00 00 00 00 02			00 b2
+29 01 00 00 00 00 02			c5 40
+29 01 00 00 00 00 02			00 81
+29 01 00 00 00 00 03			c4 82 0a
+29 01 00 00 00 00 02			00 c6
+29 01 00 00 00 00 02			B0 03
+29 01 00 00 00 00 02			00 c2
+29 01 00 00 00 00 02			f5 40
+29 01 00 00 00 00 02			00 c3
+29 01 00 00 00 00 02			f5 85
+29 01 00 00 00 00 02			00 00
+29 01 00 00 00 00 15	E1 05 3A 45	51 5A 67 69	92 81 99 6B	58 6B 4C 4A	3D 2C 1D 13	09
+29 01 00 00 00 00 02		00 00
+29 01 00 00 00 00 15   E2 05 3A 45      51 5A 67 69     92 81 99 6B     58 6B 4C 4A    3D 2C 1D 13      09
+29 01 00 00 00 00 02		00 80
+29 01 00 00 00 00 0c	cb 00 00 00	00 00 00 00 00 00 00 00
+29 01 00 00 00 00 02			00 90
+29 01 00 00 00 00 10	cb 00 00 00	00 00 00 00	00 00 00 00	00 00 00 00
+29 01 00 00 00 00 02	00 a0
+29 01 00 00 00 00 10	cb 00 00 00	00 00 00 00	00 00 00 00	00 00 00 00
+29 01 00 00 00 00 02			00 b0
+29 01 00 00 00 00 10	cb 00 00 00	00 00 00 00	00 00 00 00	00 00 00 00
+29 01 00 00 00 00 02			00 c0
+29 01 00 00 00 00 10	cb 05 05 05	05 05 05 05	05 05 00 00	00 00 00 00
+29 01 00 00 00 00 02	00 d0
+29 01 00 00 00 00 10	cb 00 00 00
+			05 05 05 05
+			05 05 05 05
+			05 05 05 05
+29 01 00 00 00 00 02
+			00 e0
+29 01 00 00 00 00 0f
+			cb 05 00 00
+			00 00 00 00
+			00 00 00 05
+			05 05 05
+29 01 00 00 00 00 02
+			00 f0
+29 01 00 00 00 00 0c
+			cb ff ff ff
+			ff ff ff ff
+			ff ff ff ff
+29 01 00 00 00 00 02
+			00 80
+29 01 00 00 00 00 10
+			cc 2d 2d 0a
+			0c 0e 10 00
+			00 00 00 00
+			00 00 00 00
+29 01 00 00 00 00 02
+			00 90
+29 01 00 00 00 00 10
+			cc 00 00 00
+			2e 2e 02 04
+			2d 2d 09 0b
+			0d 0f 00 00
+29 01 00 00 00 00 02
+			00 a0
+29 01 00 00 00 00 0f
+			cc 00 00 00
+			00 00 00 00
+			00 00 00 2e
+			2e 01 03
+29 01 00 00 00 00 02
+			00 b0
+29 01 00 00 00 00 10
+			cc 2d 2e 0f
+			0d 0b 09 00
+			00 00 00 00
+			00 00 00 00
+29 01 00 00 00 00 02
+			00 c0
+29 01 00 00 00 00 10
+			cc 00 00 00
+			2e 2d 03 01
+			2d 2e 10 0e
+			0c 0a 00 00
+29 01 00 00 00 00 02
+			00 d0
+29 01 00 00 00 00 0f
+			cc 00 00 00
+			00 00 00 00
+			00 00 00 2e
+			2d 04 02
+29 01 00 00 00 00 02
+			00 80
+29 01 00 00 00 00 0d
+			ce 8D 03 29
+			8C 03 29 8B
+			03 29 8A 03
+			29
+29 01 00 00 00 00 02
+			00 90
+29 01 00 00 00 00 0f
+			ce 00 00 00
+			00 00 00 00
+			00 00 00 00
+			00 00 00
+29 01 00 00 00 00 02
+			00 a0
+29 01 00 00 00 00 0f
+			ce 38 0B 8D
+			00 8d 29 00
+			38 0A 8D 01
+			8d 29 00
+29 01 00 00 00 00 02
+			00 b0
+29 01 00 00 00 00 0f
+			ce 38 09 8D
+			02 8d 29 00
+			38 08 8D 03
+			8d 29 00
+29 01 00 00 00 00 02
+			00 c0
+29 01 00 00 00 00 0f
+			ce 38 07 8D
+			04 8d 29 00
+			38 06 8D 05
+			8d 29 00
+29 01 00 00 00 00 02
+			00 d0
+29 01 00 00 00 00 0f
+			ce 38 05 8D
+			06 8d 29 00
+			38 04 8D 07
+			8d 29 00
+29 01 00 00 00 00 02
+			00 80
+29 01 00 00 00 00 0f
+			cf 00 00 00
+			00 00 00 00
+			00 00 00 00
+			00 00 00
+29 01 00 00 00 00 02
+			00 90
+29 01 00 00 00 00 0f
+			cf 00 00 00
+			00 00 00 00
+			00 00 00 00
+			00 00 00
+29 01 00 00 00 00 02
+			00 a0
+29 01 00 00 00 00 0f
+			cf 00 00 00
+			00 00 00 00
+			00 00 00 00
+			00 00 00
+29 01 00 00 00 00 02
+			00 b0
+29 01 00 00 00 00 0f
+			cf 00 00 00
+			00 00 00 00
+			00 00 00 00
+			00 00 00
+29 01 00 00 00 00 02
+			00 c0
+29 01 00 00 00 00 0c
+			cf 01 01 20
+			20 00 00 01
+			01 00 00 00
+29 01 00 00 00 00 02
+			00 b5
+29 01 00 00 00 00 07
+			c5 3c 01 ff
+			3c 01 ff
+29 01 00 00 00 00 02
+			00 00
+29 01 00 00 00 00 04
+			ff ff ff ff
+
+			05 01 00 00 78 00 02
+			11 00
+			05 01 00 00 14 00 02
+			29 00];
+		qcom,mdss-dsi-off-command = [05 01 00 00 00 00 02 28 00
+				05 01 00 00 00 00 02 10 00];
+		qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
+                //qcom,mdss-dsi-panel-status-check-mode = "bta_check";
+		qcom,mdss-dsi-h-sync-pulse = <1>;
+		qcom,mdss-dsi-traffic-mode = "burst_mode";//"non_burst_sync_pulse";//
+		//qcom,mdss-dsi-lane-map = "lane_map_0123";
+		qcom,mdss-dsi-bllp-eof-power-mode;
+		qcom,mdss-dsi-bllp-power-mode;
+		qcom,mdss-dsi-lane-0-state;
+		qcom,mdss-dsi-lane-1-state;
+		qcom,mdss-dsi-lane-2-state;
+		qcom,mdss-dsi-lane-3-state;
+		//qcom,mdss-dsi-panel-timings = [7b 1A 10 00 3C 40 14 1c 15 03 04 00];
+		qcom,mdss-dsi-panel-timings = [82 1E 14 00 42 46 18 20 16 03 04 00];
+		qcom,mdss-dsi-t-clk-post = <0x04>;
+		qcom,mdss-dsi-t-clk-pre = <0x1b>;
+		qcom,mdss-dsi-bl-min-level = <1>;
+		qcom,mdss-dsi-bl-max-level = <255>;
+		qcom,mdss-pan-physical-width-dimension = <62>; // add width for display test
+		qcom,mdss-pan-physical-height-dimension = <110>;// add height for display test
+		qcom,mdss-dsi-dma-trigger = "trigger_sw";
+		qcom,mdss-dsi-mdp-trigger = "none";
+		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_pwm";
+		//add by yusen.ke.sz@tcl.com at 20160108 for enable cabl
+		qcom,mdss-dsi-bl-pmic-pwm-frequency = <33>;//modify by yusen.ke.sz@tcl.com at 20160202 for fix backlight can not adjust
+        qcom,mdss-dsi-bl-pmic-bank-select = <0>;
+		//add end
+        	qcom,mdss-dsi-lp11-init;
+		qcom,mdss-dsi-init-delay-us = <50000>;
+		qcom,mdss-dsi-reset-sequence = <1 10>, <0 10>, <1 120>;
+		//add by yusen.ke.sz@tcl.com at 20151217 for esd check 
+		qcom,esd-check-enabled;
+		qcom,mdss-dsi-panel-status-command = [
+		06 01 00 01 05 00 02 0a 00
+		];
+		qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-panel-status-check-mode = "reg_read";
+		qcom,mdss-dsi-panel-status-value = <0x9C>;
+		//add end
+	};
+};
