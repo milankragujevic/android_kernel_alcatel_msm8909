@@ -1,6 +1,0 @@
-config GPIO_EXP
-	tristate "PCAL6416A GPIO expander"
-	depends on I2C
-	help
-	  GPIO driver for PCAL6416A I2C-based GPIO expander.
-

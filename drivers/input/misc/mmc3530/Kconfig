@@ -1,9 +1,0 @@
-config SENSORS_MMC3530KJ
-	tristate "MMC3530KJ 3-axis magnetic sensor driver"
-	depends on I2C
-	help
-	  Say Y here if you want to enable the MMC3530KJ magnetic sensor
-	  driver.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called mmc3530KJ.

@@ -1,6 +1,0 @@
-obj-$(CONFIG_TOUCHSCREEN_GT615_POP45) += goodix_tool.o
-obj-$(CONFIG_TOUCHSCREEN_GT615_POP45) += gt9xx.o
-obj-$(CONFIG_TOUCHSCREEN_GT615_POP45) += gt9xx_update.o
-obj-$(CONFIG_TOUCHSCREEN_GT615_POP45) += gt9xx_openshort.o
-
-

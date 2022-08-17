@@ -1,1 +1,0 @@
-obj-$(CONFIG_SENSORS_MMC3530KJ) += mmc3524x.o
